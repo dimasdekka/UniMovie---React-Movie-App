@@ -23,18 +23,20 @@ const GENRE_MAPPING = {
   37: 'Western'
 }
 
-const MovieCard = ({movie: { 
-  title, 
-  vote_average, 
-  poster_path, 
-  release_date, 
-  genre_ids // Menggunakan genre_ids dari API TMDB
-}}) => {
+const MovieCard = ({ movie, onMovieClick }) => {
+  const { 
+    title, 
+    vote_average, 
+    poster_path, 
+    release_date, 
+    genre_ids 
+  } = movie;
+
   // Ambil genre pertama dari array genre_ids
   const firstGenre = genre_ids?.[0] ? GENRE_MAPPING[genre_ids[0]] : 'Unknown Genre'
 
   return (
-    <div className='movie-card'>
+    <div className='movie-card cursor-pointer' onClick={() => onMovieClick(movie)}>
       <img 
         src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : '/no-movie.png'} 
         alt={title} 
