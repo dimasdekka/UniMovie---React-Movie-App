@@ -1,10 +1,16 @@
+'use client'
+import FluidCursor from './components/FluidCursor.jsx';
 import React, { useEffect, useState } from 'react';
-import Search from './components/Search';
+import Search from './components/search';
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
 import MovieDetails from './components/MovieDetails';
 import { useDebounce } from 'react-use';
 import { updateSearchCount, getTrendingMovies } from './appwrite.js';
+
+
+
+
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -164,6 +170,7 @@ const App = () => {
 
   return (
     <main>
+      <FluidCursor />
       <div className='pattern' />
       <div className='wrapper'>
         <header>
@@ -175,21 +182,17 @@ const App = () => {
         </header>
         
         {trendingMovies.length > 0 && (
-          <section className='trending'>
-            <h2>Trending Movies</h2>
-            <ul>
-              {trendingMovies.map((movie, index) => (
-                <li 
-                  key={movie.$id} 
-                  className="cursor-pointer transition-transform hover:scale-105"
-                  onClick={() => handleTrendingMovieClick(movie)}
-                >
-                  <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.searchTerm} />
-                </li>
-              ))}
-            </ul>
-          </section>
+          <section className="trending">
+          <h2>Trending Movies</h2>
+          <ul>
+            {trendingMovies.map((movie, index) => (
+              <li key={movie.$id} onClick={() => handleTrendingMovieClick(movie)}>
+                <p>{index + 1}</p>
+                <img src={movie.poster_url} alt={movie.title} />
+              </li>
+            ))}
+          </ul>
+        </section>
         )}
         
         <section className='all-movies'>

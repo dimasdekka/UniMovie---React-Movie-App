@@ -1,162 +1,287 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #030014;
-
-  --color-light-100: #cecefb;
-  --color-light-200: #a8b5db;
-
-  --color-gray-100: #9ca4ab;
-
-  --color-dark-100: #0f0d23;
-
-  --font-dm-sans: DM Sans, sans-serif;
-
+  --color-primary: #080322;
+  --color-secondary: #3F0071;
+  --color-accent: #FB2576;
+  
+  --color-light-100: #E0FFFF;
+  --color-light-200: #97DFFC;
+  
+  --color-gray-100: #9DB2BF;
+  
+  --color-dark-100: #10002B;
+  --color-card: rgba(63, 0, 113, 0.3);
+  
+  --font-space: DM Sans, sans-serif;
+  
   --breakpoint-xs: 480px;
-
+  
   --background-image-hero-pattern: url("/hero-bg.png");
 }
 
 @layer base {
+  *  {
+    cursor: none;
+  }
   body {
     font-family: "DM Sans", serif;
-    font-optical-sizing: auto;
-    background: #030014;
+    background: #080322;
+    color: #E0FFFF;
+    overflow-x: hidden;
   }
-
+  
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight sm:text-[64px] sm:leading-[76px];
+    background: linear-gradient(90deg, #FB2576, #3F0071);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(251, 37, 118, 0.3);
   }
-
+  
   h2 {
-    @apply text-2xl font-bold text-white sm:text-3xl;
+    @apply text-2xl font-bold sm:text-3xl;
+    background: linear-gradient(90deg, #E0FFFF, #97DFFC);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-
+  
   main {
-    @apply min-h-screen relative bg-primary;
+    @apply min-h-screen relative;
+    background: radial-gradient(ellipse at top, #10002B, #080322), 
+                radial-gradient(ellipse at bottom, #080322, #3F0071);
   }
-
+  
   header {
     @apply sm:mt-10 mt-5;
   }
-
+  
   header img {
-    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
+    @apply w-full max-w-lg h-auto object-contain mx-auto;
+    filter: drop-shadow(0 0 20px rgba(251, 37, 118, 0.5));
+    animation: pulse 4s infinite alternate;
   }
 }
 
 @layer components {
   .pattern {
-    @apply bg-hero-pattern w-screen h-screen bg-center bg-cover absolute z-0;
+    @apply w-screen h-screen fixed top-0 left-0 z-0;
+    background-image: 
+      radial-gradient(rgba(251, 37, 118, 0.1) 2px, transparent 2px),
+      radial-gradient(rgba(63, 0, 113, 0.15) 2px, transparent 2px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: patternFloat 30s linear infinite;
   }
-
+  
   .wrapper {
-    @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
+    @apply px-3 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
+
   }
-
+  
   .trending {
-    @apply mt-20;
-
+    @apply mt-24 relative;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(251, 37, 118, 0.5), 
+        rgba(63, 0, 113, 0.5),
+        transparent
+      );
+    }
+    
     & ul {
-      @apply flex flex-row overflow-y-auto gap-5 -mt-10 w-full hide-scrollbar;
+      @apply flex flex-row justify-center overflow-y-auto gap-5 -mt-5 w-full hide-scrollbar;
+      perspective: 1280px;
     }
-
+    
     & ul li {
-      @apply min-w-[230px] flex flex-row items-center;
+      @apply flex flex-row items-center;
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
-
+    
+    & ul li:hover {
+      transform: translateY(-10px) rotate3d(1, 1, 0, 5deg);
+      filter: brightness(1.2);
+    }
+    
     & ul li p {
       @apply fancy-text mt-[22px] text-nowrap;
     }
-
+    
     & ul li img {
       @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5;
+      box-shadow: 0 10px 50px rgba(251, 37, 118, 0.3);
+      border: 2px solid transparent;
+      background: linear-gradient(#080322, #080322) padding-box,
+                linear-gradient(45deg, #FB2576, #3F0071) border-box;
     }
   }
-
+  
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
 
+    @apply w-full px-6 py-5 rounded-xl mt-14 max-w-3xl mx-auto;
+    background: rgba(16, 0, 43, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(251, 37, 118, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    
     & div {
       @apply relative flex items-center;
     }
-
+    
     & img {
       @apply absolute left-2 h-5 w-5;
+      filter: drop-shadow(0 0 5px rgba(251, 37, 118, 0.5));
     }
-
+    
     & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+      @apply w-full bg-transparent py-3 sm:pr-10 pl-10 text-base text-light-100 placeholder-light-200/50 outline-hidden;
+    }
+    
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      right: 20px;
+      width: 70%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(251, 37, 118, 0.5), transparent);
     }
   }
-
+  
   .all-movies {
-    @apply space-y-9;
-
+    @apply space-y-12 mt-8;
+    
+    & h2 {
+      @apply mb-8;
+    }
+    
     & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+      @apply grid grid-cols-1 gap-8 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
   }
-
+  
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
-
+    @apply p-5 rounded-xl;
+    background: var(--color-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(224, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+    
+    &:hover {
+      transform: translateY(-15px) rotate3d(1, 5, 1, 5deg);
+      border-color: rgba(251, 37, 118, 0.3);
+      box-shadow: 0 20px 40px rgba(251, 37, 118, 0.15);
+    }
+    
     & img {
-      @apply rounded-lg h-auto w-full;
+      @apply rounded-lg h-auto w-full relative;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transform: translateZ(20px);
+      transition: transform 0.4s ease;
     }
-
+    
+    &:hover img {
+      transform: translateZ(30px) scale(1.05);
+    }
+    
     & h3 {
-      @apply text-white font-bold text-base line-clamp-1;
+      @apply text-light-100 font-bold text-lg line-clamp-1 mt-4;
+      transform: translateZ(15px);
     }
-
+    
     & .content {
-      @apply mt-2 flex flex-row items-center flex-wrap gap-2;
+      @apply mt-3 flex flex-row items-center flex-wrap gap-3;
+      transform: translateZ(10px);
     }
-
+    
     & .rating {
-      @apply flex flex-row items-center gap-1;
+      @apply flex flex-row items-center gap-2 bg-accent/10 px-3 py-1 rounded-full;
     }
-
+    
     & .rating img {
       @apply size-4 object-contain;
+      box-shadow: none;
+      transform: none;
     }
-
+    
     & .rating p {
-      @apply font-bold text-base text-white;
+      @apply font-bold text-base text-accent;
     }
-
+    
     & .content span {
-      @apply text-sm text-gray-100;
+      @apply text-sm text-light-200;
     }
-
+    
     & .content .lang {
-      @apply capitalize text-gray-100 font-medium text-base;
+      @apply capitalize text-light-200 font-medium text-sm px-3 py-1 rounded-full bg-secondary/20;
     }
-
+    
     & .content .year {
-      @apply text-gray-100 font-medium text-base;
+      @apply text-light-200 font-medium text-sm px-3 py-1 rounded-full bg-secondary/20;
     }
   }
 }
 
 @utility text-gradient {
-  @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-[#FB2576] to-[#3F0071] bg-clip-text text-transparent;
 }
 
 @utility fancy-text {
-  -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-  font-size: 190px;
-  font-family: "Bebas Neue", sans-serif;
+  -webkit-text-stroke: 1px rgba(251, 37, 118, 0.7);
+  font-size: 180px;
+  font-family: Cinzel Decorative, sans-serif;
+  color: transparent;
+  letter-spacing: -5px;
+  font-weight: 800;
 }
 
 @utility hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-
+  
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+@keyframes pulse {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(251, 37, 118, 0.3));
+  }
+  100% {
+    filter: drop-shadow(0 0 25px rgba(251, 37, 118, 0.6));
+  }
+}
+
+@keyframes patternFloat {
+  0% {
+    background-position: 0 0, 25px 25px;
+  }
+  100% {
+    background-position: 1000px 1000px, 1025px 1025px;
+  }
+}
+
+#fluid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
 }

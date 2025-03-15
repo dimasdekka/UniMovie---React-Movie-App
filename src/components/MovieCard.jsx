@@ -36,7 +36,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
   const firstGenre = genre_ids?.[0] ? GENRE_MAPPING[genre_ids[0]] : 'Unknown Genre'
 
   return (
-    <div className='movie-card cursor-pointer' onClick={() => onMovieClick(movie)}>
+    <div className='movie-card' onClick={() => onMovieClick(movie)}>
       <img 
         src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : '/no-movie.png'} 
         alt={title} 
